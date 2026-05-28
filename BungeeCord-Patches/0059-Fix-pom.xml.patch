@@ -1,0 +1,21 @@
+From adf600456c8a44ced2c68c7c9197b2e3b1146e42 Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Thu, 28 May 2026 10:56:57 -0400
+Subject: [PATCH] Fix pom.xml
+
+
+diff --git a/proxy/pom.xml b/proxy/pom.xml
+index 3dbdfafb..000fd4a2 100644
+--- a/proxy/pom.xml
++++ b/proxy/pom.xml
+@@ -45,6 +45,7 @@
+             <groupId>io.netty</groupId>
+             <artifactId>netty-resolver-dns-native-macos</artifactId>
+             <classifier>osx-x86_64</classifier>
++            <scope>compile</scope>
+         </dependency>
+         <!-- Waterfall End -->
+         <dependency>
+-- 
+2.54.0
+

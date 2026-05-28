@@ -1,0 +1,27 @@
+From f1fe800c733adafce497255863f42ff03cc32f3f Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Mon, 25 May 2026 22:54:30 -0400
+Subject: [PATCH] Change default permissions
+
+
+diff --git a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+index 3a0a0bea..14f59b1c 100644
+--- a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
++++ b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+@@ -90,11 +90,11 @@ public class YamlConfig implements ConfigurationAdapter
+         {
+             set( "permissions.default", Arrays.asList( new String[]
+             {
+-                "bungeecord.command.server", "bungeecord.command.list"
++                "bungeecord.command.server"
+             } ) );
+             set( "permissions.admin", Arrays.asList( new String[]
+             {
+-                "bungeecord.command.alert", "bungeecord.command.alertraw", "bungeecord.command.end", "bungeecord.command.ip", "bungeecord.command.reload", "bungeecord.command.kick", "bungeecord.command.send", "bungeecord.command.find", "bungeecord.command.perms"
++                "bungeecord.command.alert", "bungeecord.command.alertraw", "bungeecord.command.bungee", "bungeecord.command.end", "bungeecord.command.ip", "bungeecord.command.list", "bungeecord.command.reload", "bungeecord.command.kick", "bungeecord.command.send", "bungeecord.command.find", "bungeecord.command.perms"
+             } ) );
+         }
+ 
+-- 
+2.54.0
+
