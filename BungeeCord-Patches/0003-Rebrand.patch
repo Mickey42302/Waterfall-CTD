@@ -63,7 +63,7 @@ index 3a05e0f8..93f4581b 100644
      public void execute(CommandSender sender, String[] args)
      {
 -        sender.sendMessage( ChatColor.BLUE + "This server is running BungeeCord version " + ProxyServer.getInstance().getVersion() + " by md_5." );
-+        sender.sendMessage( ChatColor.BLUE + "This server is running Waterfall-CTD version " + ProxyServer.getInstance().getVersion() + " by md_5." );
++        sender.sendMessage( ChatColor.BLUE + "This server is running Waterfall-CTD version " + ProxyServer.getInstance().getVersion() + " by Mickey42302." );
      }
  }
 diff --git a/proxy/src/main/java/net/md_5/bungee/command/CommandReload.java b/proxy/src/main/java/net/md_5/bungee/command/CommandReload.java
