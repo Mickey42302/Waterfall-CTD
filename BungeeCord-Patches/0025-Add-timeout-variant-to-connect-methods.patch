@@ -1,4 +1,4 @@
-From c6c88bde278d330cf382d7f2f23961b8ab26d9dd Mon Sep 17 00:00:00 2001
+From e5805dfc9446a87dac107f9d804786957cd31d48 Mon Sep 17 00:00:00 2001
 From: Ichbinjoe <joe@ibj.io>
 Date: Sat, 16 Jul 2016 20:44:01 -0400
 Subject: [PATCH] Add timeout variant to connect methods

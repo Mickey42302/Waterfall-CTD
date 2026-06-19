@@ -1,4 +1,4 @@
-From 3973333cb06a489f39913bf676ba6b26f3e7b5b1 Mon Sep 17 00:00:00 2001
+From 298edd90961cd1b854094ac34ef52e80b5a1248a Mon Sep 17 00:00:00 2001
 From: Aaron Hill <aa1ronham@gmail.com>
 Date: Thu, 15 Sep 2016 22:38:37 +0200
 Subject: [PATCH] Fix potion race condition on Forge 1.8.9

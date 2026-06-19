@@ -1,4 +1,4 @@
-From 5039c2eff8c77abf3bdb4717da37104bbaf33632 Mon Sep 17 00:00:00 2001
+From 01ab39b6a51befad974f8df0facb1316c0f14747 Mon Sep 17 00:00:00 2001
 From: Mickey42302 <bgoodwin423@gmail.com>
 Date: Thu, 28 May 2026 14:01:04 -0400
 Subject: [PATCH] Disable return for unknown BungeeCord version check

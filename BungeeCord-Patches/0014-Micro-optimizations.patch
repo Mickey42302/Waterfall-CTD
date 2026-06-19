@@ -1,4 +1,4 @@
-From 9e0e8cbcc42e54886cdde612ff92f0c26dc2a0cb Mon Sep 17 00:00:00 2001
+From 0ea8594e08644ba34e4a5b3db507dc490aba0d87 Mon Sep 17 00:00:00 2001
 From: Tux <write@imaginarycode.com>
 Date: Tue, 19 Jan 2016 15:13:29 -0700
 Subject: [PATCH] Micro-optimizations

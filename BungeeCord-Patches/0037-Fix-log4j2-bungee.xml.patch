@@ -1,4 +1,4 @@
-From 3a53e6b7be87e542d355c28393ce39439a493b8e Mon Sep 17 00:00:00 2001
+From bbe1fb407c64ca96bf7dc5810f87eaa8a594ee1c Mon Sep 17 00:00:00 2001
 From: Mickey42302 <bgoodwin423@gmail.com>
 Date: Thu, 28 May 2026 12:39:49 -0400
 Subject: [PATCH] Fix log4j2-bungee.xml

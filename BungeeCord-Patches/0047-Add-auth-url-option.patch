@@ -1,4 +1,4 @@
-From 0d96bd0bf791ebf9f00b64edbda2c552c462e710 Mon Sep 17 00:00:00 2001
+From d12540183a9741755a2eb94d87d83ee0267a1e00 Mon Sep 17 00:00:00 2001
 From: theminecoder <theminecoder.dev@gmail.com>
 Date: Sun, 19 Jul 2020 10:18:23 +1000
 Subject: [PATCH] Add auth url option

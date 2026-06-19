@@ -1,4 +1,4 @@
-From 6eaea0ccdadcf694e5d30c22654711732eff20ea Mon Sep 17 00:00:00 2001
+From 51c4196033c7b2aed16a213ca9a51fde759e4727 Mon Sep 17 00:00:00 2001
 From: Tux <write@imaginarycode.com>
 Date: Wed, 21 Dec 2016 03:13:03 -0500
 Subject: [PATCH] Optionally use async Netty DNS resolver

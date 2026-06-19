@@ -1,4 +1,4 @@
-From 818c1559bb9abb029a58d856663002edd372cc83 Mon Sep 17 00:00:00 2001
+From 518166db208148fa757409e4b59183e5e0cfe1fc Mon Sep 17 00:00:00 2001
 From: Shane Freeder <theboyetronic@gmail.com>
 Date: Sun, 12 Jun 2022 06:45:54 +0100
 Subject: [PATCH] Add protocol version to packet not found message

@@ -1,4 +1,4 @@
-From aeb2c5ac9ce87a806d6d639ae54550a1817c0882 Mon Sep 17 00:00:00 2001
+From de6faf70fc875e1bc39825b43cd7f6ddc5a5a355 Mon Sep 17 00:00:00 2001
 From: Techcable <Techcable@outlook.com>
 Date: Thu, 28 Jan 2016 15:13:29 -0700
 Subject: [PATCH] Allow removing servers or changing addresses on reload

@@ -1,4 +1,4 @@
-From c10875edab7a81c8c251ebcf3231447e427a82cb Mon Sep 17 00:00:00 2001
+From 200d6ab9c6eb858c2a3b1651d67abb12615e27bb Mon Sep 17 00:00:00 2001
 From: Mickey42302 <bgoodwin423@gmail.com>
 Date: Mon, 25 May 2026 22:51:35 -0400
 Subject: [PATCH] Rebrand
@@ -55,7 +55,7 @@ index 6fbfc9d4..7acf942a 100644
                  Thread.sleep( TimeUnit.SECONDS.toMillis( 10 ) );
              }
 diff --git a/proxy/src/main/java/net/md_5/bungee/command/CommandBungee.java b/proxy/src/main/java/net/md_5/bungee/command/CommandBungee.java
-index 3a05e0f8..93f4581b 100644
+index 3a05e0f8..4074ee2f 100644
 --- a/proxy/src/main/java/net/md_5/bungee/command/CommandBungee.java
 +++ b/proxy/src/main/java/net/md_5/bungee/command/CommandBungee.java
 @@ -16,6 +16,6 @@ public class CommandBungee extends Command

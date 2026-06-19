@@ -1,4 +1,4 @@
-From c2a460d9414f95737a79e3713254f02dfc3a0e60 Mon Sep 17 00:00:00 2001
+From 970d1d61c2432adcd3fbb54574ec9d4b6e1de63d Mon Sep 17 00:00:00 2001
 From: theminecoder <theminecoder.dev@gmail.com>
 Date: Wed, 22 Apr 2020 14:00:44 +1000
 Subject: [PATCH] Add exception reporting event

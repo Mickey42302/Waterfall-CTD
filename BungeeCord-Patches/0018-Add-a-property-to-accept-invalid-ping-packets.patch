@@ -1,4 +1,4 @@
-From 25ec141c600d14995c18448ae844012b49103145 Mon Sep 17 00:00:00 2001
+From 2ed755ecd96e76096db5b7b9c830cf6627aa1eef Mon Sep 17 00:00:00 2001
 From: Techcable <Techcable@outlook.com>
 Date: Sun, 7 Feb 2016 00:01:19 -0700
 Subject: [PATCH] Add a property to accept invalid ping packets

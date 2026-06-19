@@ -1,4 +1,4 @@
-From a0b94701261d4fc6e6a4b9ea1f23a5c75e728386 Mon Sep 17 00:00:00 2001
+From adc048b59b35ea831d18222341d57587d123dcb1 Mon Sep 17 00:00:00 2001
 From: Nathan Poirier <nathan@poirier.io>
 Date: Tue, 28 Jun 2016 23:00:49 -0500
 Subject: [PATCH] Improve ServerKickEvent

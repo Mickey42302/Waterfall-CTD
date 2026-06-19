@@ -1,4 +1,4 @@
-From bb65fc15cfa2fc78cbd71090a6648d70dcc279d4 Mon Sep 17 00:00:00 2001
+From f62de8b2cffff94ed57a9537818702dc576383d1 Mon Sep 17 00:00:00 2001
 From: Troy Frew <fuzzy_bot@arenaga.me>
 Date: Wed, 29 Jun 2016 13:56:57 -0500
 Subject: [PATCH] Configurable server version in ping response

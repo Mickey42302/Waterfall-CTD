@@ -1,4 +1,4 @@
-From 817ddeb5491c88edc206dd06229e9208a455717f Mon Sep 17 00:00:00 2001
+From 7ae6e849b0d42e0bf2be0181476bcbe889401e88 Mon Sep 17 00:00:00 2001
 From: Tux <write@imaginarycode.com>
 Date: Wed, 13 Apr 2016 15:17:05 -0400
 Subject: [PATCH] Presize the HTTP response buffer

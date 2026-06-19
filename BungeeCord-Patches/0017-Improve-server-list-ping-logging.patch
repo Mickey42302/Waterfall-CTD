@@ -1,4 +1,4 @@
-From 86a70f691ae3d686ca45f7a2786abbb7947a8493 Mon Sep 17 00:00:00 2001
+From e9daaca07a13f9458ffd88635f44996297283c8a Mon Sep 17 00:00:00 2001
 From: Janmm14 <computerjanimaus@yahoo.de>
 Date: Sat, 12 Dec 2015 23:43:30 +0100
 Subject: [PATCH] Improve server list ping logging

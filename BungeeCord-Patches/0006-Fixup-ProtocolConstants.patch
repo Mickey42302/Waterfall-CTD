@@ -1,4 +1,4 @@
-From 26177889d607845905c5e0a24531564849bfc2c6 Mon Sep 17 00:00:00 2001
+From 985de90954ab4b75bce6c0fea3b341f2a86808b1 Mon Sep 17 00:00:00 2001
 From: Troy Frew <fuzzy_bot@arenaga.me>
 Date: Tue, 15 Nov 2016 09:07:51 -0500
 Subject: [PATCH] Fixup ProtocolConstants

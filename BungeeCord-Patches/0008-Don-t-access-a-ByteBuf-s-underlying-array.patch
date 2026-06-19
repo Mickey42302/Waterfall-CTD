@@ -1,4 +1,4 @@
-From d8088b7253fcf5020863ab3d0f364c471e8cb824 Mon Sep 17 00:00:00 2001
+From 99ee5d86ae79a8b8042732501b4bdb50a851ff77 Mon Sep 17 00:00:00 2001
 From: Techcable <Techcable@techcable.net>
 Date: Tue, 3 May 2016 20:31:52 -0700
 Subject: [PATCH] Don't access a ByteBuf's underlying array

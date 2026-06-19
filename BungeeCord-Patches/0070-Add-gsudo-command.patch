@@ -1,0 +1,164 @@
+From 50aa30d2858061faaea7b3752137893f12b695bc Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Thu, 18 Jun 2026 18:42:09 -0400
+Subject: [PATCH] Add /gsudo command
+
+
+diff --git a/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandSudo.java b/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandSudo.java
+new file mode 100644
+index 00000000..e794afc1
+--- /dev/null
++++ b/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandSudo.java
+@@ -0,0 +1,115 @@
++package com.mickey42302.waterfallctd.command;
++
++import net.md_5.bungee.api.ChatColor;
++import net.md_5.bungee.api.CommandSender;
++import net.md_5.bungee.api.ProxyServer;
++import net.md_5.bungee.api.connection.ProxiedPlayer;
++import net.md_5.bungee.api.plugin.Command;
++import net.md_5.bungee.api.plugin.TabExecutor;
++
++import java.util.ArrayList;
++import java.util.Collection;
++import java.util.List;
++import java.util.Map;
++
++public class CommandSudo extends Command implements TabExecutor
++{
++
++    public CommandSudo()
++    {
++        super("gsudo", "waterfall.command.sudo");
++    }
++
++    @Override
++    public void execute(CommandSender sender, String[] args)
++    {
++        if (args.length < 2)
++        {
++            sender.sendMessage(ChatColor.RED + "Usage: /gsudo <player> <command>");
++            return;
++        }
++
++        ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[0]);
++
++        if (target == null)
++        {
++            sender.sendMessage(ChatColor.RED + "Player '" + args[0] + "' not found.");
++            return;
++        }
++
++        StringBuilder commandBuilder = new StringBuilder();
++        for (int i = 1; i < args.length; i++)
++        {
++            commandBuilder.append(args[i]).append(" ");
++        }
++
++        String commandToRun = commandBuilder.toString().trim();
++
++        if (commandToRun.startsWith("/"))
++        {
++            commandToRun = commandToRun.substring(1);
++        }
++
++        boolean success = ProxyServer.getInstance().getPluginManager().dispatchCommand(target, commandToRun);
++
++        if (success)
++        {
++            sender.sendMessage(ChatColor.GREEN + "Successfully forced " + target.getName() + " to run: /" + commandToRun);
++        }
++        else
++        {
++            sender.sendMessage(ChatColor.RED + "Failed to execute command as " + target.getName());
++        }
++    }
++
++    @Override
++    public Iterable<String> onTabComplete(CommandSender sender, String[] args)
++    {
++        List<String> completions = new ArrayList<>();
++
++        if (args.length == 1)
++        {
++            String partialName = args[0].toLowerCase();
++            for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers())
++            {
++                if (player.getName().toLowerCase().startsWith(partialName))
++                {
++                    completions.add(player.getName());
++                }
++            }
++        }
++        else if (args.length == 2)
++        {
++            String partialCommand = args[1].toLowerCase();
++
++            if (partialCommand.startsWith("/"))
++            {
++                partialCommand = partialCommand.substring(1);
++            }
++
++            ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[0]);
++
++            if (target != null)
++            {
++                Collection<Map.Entry<String, Command>> proxyCommands =
++                        ProxyServer.getInstance().getPluginManager().getCommands();
++
++                for (Map.Entry<String, Command> entry : proxyCommands)
++                {
++                    String commandName = entry.getKey();
++                    Command cmd = entry.getValue();
++
++                    if (commandName.toLowerCase().startsWith(partialCommand))
++                    {
++                        if (cmd.getPermission() == null || cmd.getPermission().isEmpty() || target.hasPermission(cmd.getPermission()))
++                        {
++                            completions.add(commandName);
++                        }
++                    }
++                }
++            }
++        }
++
++        return completions;
++    }
++}
+\ No newline at end of file
+diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
+index e3fbaec1..5d0a9815 100644
+--- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
++++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
+@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
+ import com.google.common.collect.Sets;
+ import com.google.common.util.concurrent.ThreadFactoryBuilder;
+ import com.mickey42302.waterfallctd.command.CommandHelp;
++import com.mickey42302.waterfallctd.command.CommandSudo;
+ import io.github.waterfallmc.waterfall.conf.WaterfallConfiguration;
+ import io.github.waterfallmc.waterfall.event.ProxyExceptionEvent;
+ import io.github.waterfallmc.waterfall.exception.ProxyPluginEnableDisableException;
+@@ -235,6 +236,7 @@ public class BungeeCord extends ProxyServer
+         getPluginManager().registerCommand( null, new CommandBungee() );
+         getPluginManager().registerCommand( null, new CommandPerms() );
+         getPluginManager().registerCommand( null, new CommandHelp() );
++        getPluginManager().registerCommand( null, new CommandSudo() );
+ 
+         if ( !Boolean.getBoolean( "net.md_5.bungee.native.disable" ) )
+         {
+diff --git a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+index bb6b3318..c03924b4 100644
+--- a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
++++ b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+@@ -105,7 +105,7 @@ public class YamlConfig implements ConfigurationAdapter
+             } ) );
+             set( "permissions.admin", Arrays.asList( new String[]
+             {
+-                "bungeecord.command.alert", "bungeecord.command.alertraw", "bungeecord.command.bungee", "bungeecord.command.end", "bungeecord.command.ip", "bungeecord.command.list", "bungeecord.command.reload", "bungeecord.command.kick", "bungeecord.command.send", "bungeecord.command.find", "bungeecord.command.perms"
++                "bungeecord.command.alert", "bungeecord.command.alertraw", "bungeecord.command.bungee", "bungeecord.command.end", "bungeecord.command.ip", "bungeecord.command.list", "bungeecord.command.reload", "bungeecord.command.kick", "bungeecord.command.send", "bungeecord.command.find", "bungeecord.command.perms", "waterfall.command.sudo"
+             } ) );
+         }
+ 
+-- 
+2.54.0
+

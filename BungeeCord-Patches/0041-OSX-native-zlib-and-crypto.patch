@@ -1,4 +1,4 @@
-From e9467cfbcf8cec5458331c0610aaa6ec5907386d Mon Sep 17 00:00:00 2001
+From 1d37669d2d1012a20af002674382605590bc0a38 Mon Sep 17 00:00:00 2001
 From: Colin Godsey <crgodsey@gmail.com>
 Date: Tue, 16 Apr 2019 07:25:52 -0600
 Subject: [PATCH] OSX native zlib and crypto

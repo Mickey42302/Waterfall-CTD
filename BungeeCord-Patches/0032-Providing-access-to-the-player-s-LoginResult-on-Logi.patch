@@ -1,4 +1,4 @@
-From ff63159461adfd0f957e5ddb45e278d28dbb1594 Mon Sep 17 00:00:00 2001
+From 10f25e0bff99bc6a0396373619018b2a31f8a427 Mon Sep 17 00:00:00 2001
 From: phenomax <phenomax@revayd.net>
 Date: Thu, 10 Aug 2017 18:41:17 +0200
 Subject: [PATCH] Providing access to the player's LoginResult on LoginEvent

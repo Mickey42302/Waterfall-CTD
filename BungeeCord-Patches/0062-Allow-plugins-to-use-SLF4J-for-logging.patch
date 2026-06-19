@@ -1,4 +1,4 @@
-From 86a5eaddcdba3446ef20739982358eca89b1e8bb Mon Sep 17 00:00:00 2001
+From 6f295f22d5eb02ae614647dd8f66c90c6599480a Mon Sep 17 00:00:00 2001
 From: Mickey42302 <bgoodwin423@gmail.com>
 Date: Thu, 28 May 2026 13:31:59 -0400
 Subject: [PATCH] Allow plugins to use SLF4J for logging

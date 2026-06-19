@@ -1,4 +1,4 @@
-From bfb6edff896a82a9186b99154370f29e3a756332 Mon Sep 17 00:00:00 2001
+From 09df0941538f59b76114d7696b293db347acd3db Mon Sep 17 00:00:00 2001
 From: xDark <aleshkailyashevich@gmail.com>
 Date: Fri, 31 May 2019 08:11:31 +0300
 Subject: [PATCH] Allow to disable tablist rewrite

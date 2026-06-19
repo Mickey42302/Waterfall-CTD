@@ -1,4 +1,4 @@
-From bd63623d3109530bb991ad8aa5da6aec84ac9eb6 Mon Sep 17 00:00:00 2001
+From d8f04947db01d47f713693bc816f431ffa2a366c Mon Sep 17 00:00:00 2001
 From: Shane Freeder <theboyetronic@gmail.com>
 Date: Fri, 21 Apr 2023 15:32:33 +0100
 Subject: [PATCH] reduce log spam from clients registeirng too many channels

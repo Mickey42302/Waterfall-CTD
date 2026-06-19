@@ -1,4 +1,4 @@
-From eb2b8a2910562e0ea035bc979f7a1d321e6bb879 Mon Sep 17 00:00:00 2001
+From 779365aa7ca8d85b9e1891d344709c9b4071ea89 Mon Sep 17 00:00:00 2001
 From: Mickey42302 <bgoodwin423@gmail.com>
 Date: Thu, 28 May 2026 13:47:08 -0400
 Subject: [PATCH] Always download the latest version of the modules

@@ -1,0 +1,25 @@
+From 2ac3350db5176974d099dfe4ac9696e9e58add2c Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Thu, 18 Jun 2026 19:02:10 -0400
+Subject: [PATCH] Disable auto-update for modules (this is temporary)
+
+
+diff --git a/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java b/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java
+index d94a646e..bf38ff2d 100644
+--- a/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java
++++ b/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java
+@@ -118,8 +118,9 @@ public class ModuleManager
+         {
+             ModuleVersion moduleVersion = ( module.getFile().exists() ) ? getVersion( module.getFile() ) : null;
+ 
+-            proxy.getLogger().info( "Attempting to update plugin from " + moduleVersion + " to " + bungeeVersion );
+-            module.getProvider().retrieve( module, bungeeVersion );
++            // This is temporary (no update server is available for Waterfall-CTD).
++            // proxy.getLogger().info( "Attempting to update plugin from " + moduleVersion + " to " + bungeeVersion );
++            // module.getProvider().retrieve( module, bungeeVersion );
+         }
+     }
+ 
+-- 
+2.54.0
+

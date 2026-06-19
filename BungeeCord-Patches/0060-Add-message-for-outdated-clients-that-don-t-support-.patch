@@ -1,4 +1,4 @@
-From 79019a334bee303a6553b6fef2512bc721b71447 Mon Sep 17 00:00:00 2001
+From 5f58710faed2a2f95e333a2d82f881e5c9a27544 Mon Sep 17 00:00:00 2001
 From: Aurora <aurora@relanet.eu>
 Date: Mon, 18 Jul 2022 15:56:05 +0200
 Subject: [PATCH] Add message for outdated clients that don't support secure

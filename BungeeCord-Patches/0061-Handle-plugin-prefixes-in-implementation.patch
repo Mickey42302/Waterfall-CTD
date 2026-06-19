@@ -1,4 +1,4 @@
-From 411dd05b37ab078fe80fc17f2eb345a7387c79e2 Mon Sep 17 00:00:00 2001
+From 033f900424943900c7198c40c202eed649b79aee Mon Sep 17 00:00:00 2001
 From: Mickey42302 <bgoodwin423@gmail.com>
 Date: Thu, 28 May 2026 12:47:11 -0400
 Subject: [PATCH] Handle plugin prefixes in implementation

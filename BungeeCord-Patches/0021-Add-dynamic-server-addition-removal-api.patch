@@ -1,4 +1,4 @@
-From 4b9572b7369245a0fd0cd92773a5f6560f80b9a6 Mon Sep 17 00:00:00 2001
+From a534543f440e026ed0e7a097e9fbae479ae4ff3b Mon Sep 17 00:00:00 2001
 From: Troy Frew <fuzzy_bot@arenaga.me>
 Date: Wed, 29 Jun 2016 04:29:25 +0200
 Subject: [PATCH] Add dynamic server addition/removal api.

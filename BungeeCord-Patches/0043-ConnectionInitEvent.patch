@@ -1,4 +1,4 @@
-From 1b0762dc5ab8dc7e6d67f39256e1c93897177f67 Mon Sep 17 00:00:00 2001
+From bc6afa439aff02edbf2e514e8b64afdb28cbf615 Mon Sep 17 00:00:00 2001
 From: Shane Freeder <theboyetronic@gmail.com>
 Date: Mon, 2 Dec 2019 11:35:17 +0000
 Subject: [PATCH] ConnectionInitEvent

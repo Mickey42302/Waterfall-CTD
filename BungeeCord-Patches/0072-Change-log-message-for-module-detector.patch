@@ -1,0 +1,22 @@
+From eed8c29e573c9b8077d20799c6af0a423f4c5cfe Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Thu, 18 Jun 2026 19:08:23 -0400
+Subject: [PATCH] Change log message for module detector
+
+
+diff --git a/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java b/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java
+index bf38ff2d..7d1d5d97 100644
+--- a/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java
++++ b/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java
+@@ -111,7 +111,7 @@ public class ModuleManager
+ 
+             ModuleSpec spec = new ModuleSpec( name, new File( moduleDirectory, name + ".jar" ), source );
+             modules.add( spec );
+-            proxy.getLogger().info( "Discovered module: " + spec );
++            proxy.getLogger().info( "Checking for module: " + spec );
+         }
+ 
+         for ( ModuleSpec module : modules )
+-- 
+2.54.0
+

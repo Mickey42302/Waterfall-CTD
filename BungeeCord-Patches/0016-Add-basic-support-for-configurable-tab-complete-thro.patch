@@ -1,4 +1,4 @@
-From c3fb6010c3384df1c01b1f15c9178e1242f08576 Mon Sep 17 00:00:00 2001
+From 7f5279f73105842724e0c192207abd6de21b254b Mon Sep 17 00:00:00 2001
 From: Johannes Donath <johannesd@torchmind.com>
 Date: Sat, 4 Jul 2015 06:31:33 +0200
 Subject: [PATCH] Add basic support for configurable tab-complete throttling

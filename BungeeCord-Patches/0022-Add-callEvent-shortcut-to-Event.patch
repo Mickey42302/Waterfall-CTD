@@ -1,4 +1,4 @@
-From 2a50c75d87934b57ad069112d13043ea47158925 Mon Sep 17 00:00:00 2001
+From f718a3be917a239cd78509299b0f00ce4fabf78f Mon Sep 17 00:00:00 2001
 From: Mark Vainomaa <mikroskeem@mikroskeem.eu>
 Date: Sun, 14 Apr 2019 19:15:00 +0300
 Subject: [PATCH] Add callEvent() shortcut to Event

@@ -1,4 +1,4 @@
-From b716a6ff4aad47563ac2a34d371e99f016a89d24 Mon Sep 17 00:00:00 2001
+From 95ebf64b19aa10c220583df256accafdcc8f9041 Mon Sep 17 00:00:00 2001
 From: Shane Freeder <theboyetronic@gmail.com>
 Date: Sat, 20 Jun 2020 18:21:17 +0100
 Subject: [PATCH] Remove version from brand info

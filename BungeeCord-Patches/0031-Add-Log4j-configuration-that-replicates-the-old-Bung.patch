@@ -1,4 +1,4 @@
-From 4525be5366c7086f202db2370e586f6e51b11baa Mon Sep 17 00:00:00 2001
+From d33b678cc42d1b1d80bd91ad99a6ac6145a00b31 Mon Sep 17 00:00:00 2001
 From: Minecrell <minecrell@minecrell.net>
 Date: Sun, 24 Sep 2017 12:06:49 +0200
 Subject: [PATCH] Add Log4j configuration that replicates the old BungeeCord

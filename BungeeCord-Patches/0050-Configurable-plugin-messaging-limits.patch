@@ -1,4 +1,4 @@
-From 27953f25c3f09b1c8bb791868b5c1399f6fdd80a Mon Sep 17 00:00:00 2001
+From df19a55f11adaf0b380785169741f0a1605dca4d Mon Sep 17 00:00:00 2001
 From: FivePB <admin@fivepb.me>
 Date: Tue, 16 Nov 2021 21:15:32 +0100
 Subject: [PATCH] Configurable plugin messaging limits

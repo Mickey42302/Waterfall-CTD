@@ -1,4 +1,4 @@
-From c36c688efdf5d750e47e54df88dad6dd0e06ce24 Mon Sep 17 00:00:00 2001
+From 6e04f35ac20f2912e1a7e7e483342b9e82cc69a7 Mon Sep 17 00:00:00 2001
 From: Shane Freeder <theboyetronic@gmail.com>
 Date: Thu, 14 Mar 2019 07:44:06 +0000
 Subject: [PATCH] Add ProxyDefineCommandsEvent

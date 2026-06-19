@@ -1,4 +1,4 @@
-From aa7fd1d2e376fdcf8895be5b933ebc2b8c83fd28 Mon Sep 17 00:00:00 2001
+From 049d0702c3d61d070f69c32c63b50b64d50c409f Mon Sep 17 00:00:00 2001
 From: Shane Freeder <theboyetronic@gmail.com>
 Date: Mon, 25 Nov 2019 19:54:06 +0000
 Subject: [PATCH] Speed up some common exceptions
