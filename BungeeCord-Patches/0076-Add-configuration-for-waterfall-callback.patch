@@ -1,0 +1,145 @@
+From 5bdfe203f0b3445b2133461deee73f11d3367d76 Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Fri, 19 Jun 2026 14:32:00 -0400
+Subject: [PATCH] Add configuration for /waterfall:callback
+
+
+diff --git a/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java b/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
+index 469fe0e1..76603e04 100644
+--- a/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
++++ b/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
+@@ -219,6 +219,20 @@ public interface ProxyConfig
+      */
+     boolean isLogInitialHandlerConnections();
+ 
++    /**
++     * Whether we use the main permission node for "/waterfall:callback".
++     *
++     * @return whether we use the permission node
++     */
++    boolean isCallbackPermission();
++
++    /**
++     * Whether we use the output permission node for "/waterfall:callback".
++     *
++     * @return whether we use the permission node
++     */
++    boolean isCallbackOutput();
++
+     /**
+      * The supported versions
+      *
+diff --git a/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandCallback.java b/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandCallback.java
+index ac253353..304b66b0 100644
+--- a/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandCallback.java
++++ b/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandCallback.java
+@@ -5,6 +5,7 @@ import com.google.common.cache.CacheBuilder;
+ import java.util.UUID;
+ import java.util.concurrent.TimeUnit;
+ import java.util.function.Consumer;
++import net.md_5.bungee.BungeeCord;
+ import net.md_5.bungee.api.ChatColor;
+ import net.md_5.bungee.api.CommandSender;
+ import net.md_5.bungee.api.chat.TextComponent;
+@@ -13,11 +14,11 @@ import net.md_5.bungee.api.plugin.Command;
+ public class CommandCallback extends Command {
+ 
+     private static final Cache<UUID, Consumer<CommandSender>> REGISTERED_CALLBACKS = CacheBuilder.newBuilder()
+-             .expireAfterWrite(10, TimeUnit.MINUTES)
+-             .build();
++            .expireAfterWrite(10, TimeUnit.MINUTES)
++            .build();
+ 
+     public CommandCallback() {
+-        super("waterfall:callback", "waterfall.command.callback");
++        super("waterfall:callback");
+     }
+ 
+     public static String registerCallback(Consumer<CommandSender> callback) {
+@@ -28,6 +29,13 @@ public class CommandCallback extends Command {
+ 
+     @Override
+     public void execute(CommandSender sender, String[] args) {
++        if (BungeeCord.getInstance().getConfig().isCallbackPermission()) {
++            if (!sender.hasPermission("waterfall.command.callback")) {
++                sender.sendMessage(TextComponent.fromLegacyText(ChatColor.RED + "You do not have permission to execute this command!"));
++                return;
++            }
++        }
++
+         if (args.length == 0) {
+             return;
+         }
+@@ -38,16 +46,16 @@ public class CommandCallback extends Command {
+ 
+             if (callback != null) {
+                 callback.accept(sender);
+-                if (sender.hasPermission("waterfall.command.callback.output")) {
++                if (BungeeCord.getInstance().getConfig().isCallbackOutput() && sender.hasPermission("waterfall.command.callback.output")) {
+                     sender.sendMessage(TextComponent.fromLegacyText(ChatColor.GREEN + "A callback has been triggered using the " + id.toString() + " identifier."));
+                 }
+             } else {
+-                if (sender.hasPermission("waterfall.command.callback.output")) {
++                if (BungeeCord.getInstance().getConfig().isCallbackOutput() && sender.hasPermission("waterfall.command.callback.output")) {
+                     sender.sendMessage(TextComponent.fromLegacyText(ChatColor.RED + "This callback has expired or is invalid."));
+                 }
+             }
+         } catch (IllegalArgumentException e) {
+-            if (sender.hasPermission("waterfall.command.callback.output")) {
++            if (BungeeCord.getInstance().getConfig().isCallbackOutput() && sender.hasPermission("waterfall.command.callback.output")) {
+                 sender.sendMessage(TextComponent.fromLegacyText(ChatColor.RED + "Invalid callback token format."));
+             }
+         }
+diff --git a/proxy/src/main/java/io/github/waterfallmc/waterfall/conf/WaterfallConfiguration.java b/proxy/src/main/java/io/github/waterfallmc/waterfall/conf/WaterfallConfiguration.java
+index da0efa36..73e07e6b 100644
+--- a/proxy/src/main/java/io/github/waterfallmc/waterfall/conf/WaterfallConfiguration.java
++++ b/proxy/src/main/java/io/github/waterfallmc/waterfall/conf/WaterfallConfiguration.java
+@@ -62,12 +62,28 @@ public class WaterfallConfiguration extends Configuration {
+      */
+     private int pluginChannelNameLimit = 128;
+ 
++    /**
++     * Whether we use the main permission node for "/waterfall:callback".
++     * <p>
++     * Default is false
++     */
++    private boolean callbackPermission = false;
++
++    /**
++     * Whether we use the output permission node for "/waterfall:callback".
++     * <p>
++     * Default is false
++     */
++    private boolean callbackOutput = false;
++
+     @Override
+     public void load() {
+         super.load();
+         YamlConfig config = new YamlConfig(new File("waterfall.yml"));
+         config.load(false); // Load, but no permissions
+         logInitialHandlerConnections = config.getBoolean( "log_initial_handler_connections", logInitialHandlerConnections );
++        callbackPermission = config.getBoolean( "callback_permission", callbackPermission );
++        callbackOutput = config.getBoolean( "callback_output", callbackOutput );
+         gameVersion = config.getString("game_version", "").isEmpty() ? Joiner.on(", ").join(ProtocolConstants.SUPPORTED_VERSIONS) : config.getString("game_version", "");
+         useNettyDnsResolver = config.getBoolean("use_netty_dns_resolver", useNettyDnsResolver);
+         // Throttling options
+@@ -84,6 +100,16 @@ public class WaterfallConfiguration extends Configuration {
+         return logInitialHandlerConnections;
+     }
+ 
++    @Override
++    public boolean isCallbackPermission() {
++        return callbackPermission;
++    }
++
++    @Override
++    public boolean isCallbackOutput() {
++        return callbackOutput;
++    }
++
+     @Override
+     public String getGameVersion() {
+         return gameVersion;
+-- 
+2.54.0
+
