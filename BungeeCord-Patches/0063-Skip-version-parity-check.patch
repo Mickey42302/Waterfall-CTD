@@ -1,0 +1,27 @@
+From 70af51779fb0f9620b8d68ac38f278348a8308c6 Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Thu, 28 May 2026 13:58:55 -0400
+Subject: [PATCH] Skip version parity check
+
+
+diff --git a/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java b/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java
+index b6183c6f..12a3f5e0 100644
+--- a/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java
++++ b/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java
+@@ -117,11 +117,8 @@ public class ModuleManager
+         {
+             ModuleVersion moduleVersion = ( module.getFile().exists() ) ? getVersion( module.getFile() ) : null;
+ 
+-            if ( !bungeeVersion.equals( moduleVersion ) )
+-            {
+-                proxy.getLogger().info( "Attempting to update plugin from " + moduleVersion + " to " + bungeeVersion );
+-                module.getProvider().retrieve( module, bungeeVersion );
+-            }
++            proxy.getLogger().info( "Attempting to update plugin from " + moduleVersion + " to " + bungeeVersion );
++            module.getProvider().retrieve( module, bungeeVersion );
+         }
+     }
+ 
+-- 
+2.55.0
+

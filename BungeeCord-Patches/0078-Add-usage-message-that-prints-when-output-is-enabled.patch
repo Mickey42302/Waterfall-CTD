@@ -1,0 +1,23 @@
+From 4bd2174cd83ca3ea9ca5d3ab126670adee1339ac Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Thu, 6 Aug 2026 16:31:03 -0400
+Subject: [PATCH] Add usage message that prints when output is enabled
+
+
+diff --git a/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandCallback.java b/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandCallback.java
+index 304b66b0..fe55e45d 100644
+--- a/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandCallback.java
++++ b/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandCallback.java
+@@ -37,6 +37,9 @@ public class CommandCallback extends Command {
+         }
+ 
+         if (args.length == 0) {
++            if (BungeeCord.getInstance().getConfig().isCallbackOutput() && sender.hasPermission("waterfall.command.callback.output")) {
++                sender.sendMessage(TextComponent.fromLegacyText(ChatColor.RED + "Usage: /waterfall:callback <id>"));
++            }
+             return;
+         }
+ 
+-- 
+2.55.0
+

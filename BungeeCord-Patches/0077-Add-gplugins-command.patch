@@ -1,0 +1,86 @@
+From 1616292cc7a2f4957f59ebf4fe92fcd1071cc90a Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Tue, 4 Aug 2026 20:16:29 -0400
+Subject: [PATCH] Add /gplugins command
+
+
+diff --git a/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandPlugins.java b/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandPlugins.java
+new file mode 100644
+index 00000000..bbacfcd3
+--- /dev/null
++++ b/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandPlugins.java
+@@ -0,0 +1,37 @@
++package com.mickey42302.waterfallctd.command;
++
++import net.md_5.bungee.api.ChatColor;
++import net.md_5.bungee.api.CommandSender;
++import net.md_5.bungee.api.ProxyServer;
++import net.md_5.bungee.api.plugin.Command;
++import net.md_5.bungee.api.plugin.Plugin;
++
++import java.util.Collection;
++import java.util.stream.Collectors;
++
++public class CommandPlugins extends Command
++{
++
++    public CommandPlugins()
++    {
++        super("gplugins", "waterfall.command.plugins", "gpl");
++    }
++
++    @Override
++    public void execute(CommandSender sender, String[] args)
++    {
++        Collection<Plugin> plugins = ProxyServer.getInstance().getPluginManager().getPlugins();
++
++        if (plugins.isEmpty())
++        {
++            sender.sendMessage(ChatColor.RED + "No plugins/modules are currently installed.");
++            return;
++        }
++
++        String pluginList = plugins.stream()
++                .map(plugin -> ChatColor.AQUA + plugin.getDescription().getName() + ChatColor.WHITE)
++                .collect(Collectors.joining(", "));
++
++        sender.sendMessage(ChatColor.BLUE + "Plugins/Modules (" + plugins.size() + "): " + pluginList);
++    }
++}
+\ No newline at end of file
+diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
+index 796176f5..751bb74a 100644
+--- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
++++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
+@@ -8,6 +8,7 @@ import com.google.common.collect.Sets;
+ import com.google.common.util.concurrent.ThreadFactoryBuilder;
+ import com.mickey42302.waterfallctd.command.CommandCallback;
+ import com.mickey42302.waterfallctd.command.CommandHelp;
++import com.mickey42302.waterfallctd.command.CommandPlugins;
+ import com.mickey42302.waterfallctd.command.CommandSudo;
+ import io.github.waterfallmc.waterfall.conf.WaterfallConfiguration;
+ import io.github.waterfallmc.waterfall.event.ProxyExceptionEvent;
+@@ -238,6 +239,7 @@ public class BungeeCord extends ProxyServer
+         getPluginManager().registerCommand( null, new CommandHelp() );
+         getPluginManager().registerCommand( null, new CommandSudo() );
+         getPluginManager().registerCommand( null, new CommandCallback() );
++        getPluginManager().registerCommand( null, new CommandPlugins() );
+ 
+         if ( Boolean.parseBoolean(System.getProperty("waterfall.reloadCommand", "false")) ) {
+             getPluginManager().registerCommand( null, new CommandReload() );
+diff --git a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+index f4aaa63f..17126295 100644
+--- a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
++++ b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+@@ -105,7 +105,7 @@ public class YamlConfig implements ConfigurationAdapter
+             } ) );
+             set( "permissions.admin", Arrays.asList( new String[]
+             {
+-                "bungeecord.command.alert", "bungeecord.command.alertraw", "bungeecord.command.bungee", "bungeecord.command.end", "bungeecord.command.ip", "bungeecord.command.list", "bungeecord.command.kick", "bungeecord.command.send", "bungeecord.command.find", "bungeecord.command.perms", "waterfall.command.kickall", "waterfall.command.sudo"
++                "bungeecord.command.alert", "bungeecord.command.alertraw", "bungeecord.command.bungee", "bungeecord.command.end", "bungeecord.command.ip", "bungeecord.command.list", "bungeecord.command.kick", "bungeecord.command.send", "bungeecord.command.find", "bungeecord.command.perms", "waterfall.command.kickall", "waterfall.command.sudo", "waterfall.command.plugins"
+             } ) );
+         }
+ 
+-- 
+2.55.0
+

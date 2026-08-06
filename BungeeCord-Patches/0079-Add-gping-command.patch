@@ -1,0 +1,120 @@
+From 9084a450847de440750d362cbc16e650e521c576 Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Thu, 6 Aug 2026 18:07:06 -0400
+Subject: [PATCH] Add /gping command
+
+
+diff --git a/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandPing.java b/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandPing.java
+new file mode 100644
+index 00000000..ad797e4f
+--- /dev/null
++++ b/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandPing.java
+@@ -0,0 +1,71 @@
++package com.mickey42302.waterfallctd.command;
++
++import net.md_5.bungee.api.ChatColor;
++import net.md_5.bungee.api.CommandSender;
++import net.md_5.bungee.api.ProxyServer;
++import net.md_5.bungee.api.connection.ProxiedPlayer;
++import net.md_5.bungee.api.plugin.Command;
++import net.md_5.bungee.api.plugin.TabExecutor;
++
++import java.util.ArrayList;
++import java.util.Collections;
++import java.util.List;
++
++public class CommandPing extends Command implements TabExecutor
++{
++
++    public CommandPing()
++    {
++        super("gping", "waterfall.command.ping");
++    }
++
++    @Override
++    public void execute(CommandSender sender, String[] args)
++    {
++        if (args.length == 0)
++        {
++            if (!(sender instanceof ProxiedPlayer))
++            {
++                sender.sendMessage(ChatColor.RED + "You must specify a player.");
++                return;
++            }
++
++            ProxiedPlayer player = (ProxiedPlayer) sender;
++            sender.sendMessage(ChatColor.AQUA + "Your ping: " + ChatColor.WHITE + player.getPing() + "ms");
++            return;
++        }
++
++        ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[0]);
++
++        if (target == null)
++        {
++            sender.sendMessage(ChatColor.RED + args[0] + " is not online.");
++            return;
++        }
++
++        sender.sendMessage(ChatColor.AQUA + target.getName() + "'s ping: " + ChatColor.WHITE + target.getPing() + "ms");
++    }
++
++    @Override
++    public Iterable<String> onTabComplete(CommandSender sender, String[] args)
++    {
++        // Only tab-complete player names for the first argument (/gping <player>)
++        if (args.length == 1)
++        {
++            List<String> matches = new ArrayList<>();
++            String input = args[0].toLowerCase();
++
++            for (ProxiedPlayer player : ProxyServer.getInstance().getPlayers())
++            {
++                if (player.getName().toLowerCase().startsWith(input))
++                {
++                    matches.add(player.getName());
++                }
++            }
++
++            return matches;
++        }
++
++        return Collections.emptyList();
++    }
++}
+\ No newline at end of file
+diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
+index 751bb74a..fb83ea3f 100644
+--- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
++++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
+@@ -8,6 +8,7 @@ import com.google.common.collect.Sets;
+ import com.google.common.util.concurrent.ThreadFactoryBuilder;
+ import com.mickey42302.waterfallctd.command.CommandCallback;
+ import com.mickey42302.waterfallctd.command.CommandHelp;
++import com.mickey42302.waterfallctd.command.CommandPing;
+ import com.mickey42302.waterfallctd.command.CommandPlugins;
+ import com.mickey42302.waterfallctd.command.CommandSudo;
+ import io.github.waterfallmc.waterfall.conf.WaterfallConfiguration;
+@@ -240,6 +241,7 @@ public class BungeeCord extends ProxyServer
+         getPluginManager().registerCommand( null, new CommandSudo() );
+         getPluginManager().registerCommand( null, new CommandCallback() );
+         getPluginManager().registerCommand( null, new CommandPlugins() );
++        getPluginManager().registerCommand( null, new CommandPing() );
+ 
+         if ( Boolean.parseBoolean(System.getProperty("waterfall.reloadCommand", "false")) ) {
+             getPluginManager().registerCommand( null, new CommandReload() );
+diff --git a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+index 17126295..76e58374 100644
+--- a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
++++ b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+@@ -105,7 +105,7 @@ public class YamlConfig implements ConfigurationAdapter
+             } ) );
+             set( "permissions.admin", Arrays.asList( new String[]
+             {
+-                "bungeecord.command.alert", "bungeecord.command.alertraw", "bungeecord.command.bungee", "bungeecord.command.end", "bungeecord.command.ip", "bungeecord.command.list", "bungeecord.command.kick", "bungeecord.command.send", "bungeecord.command.find", "bungeecord.command.perms", "waterfall.command.kickall", "waterfall.command.sudo", "waterfall.command.plugins"
++                "bungeecord.command.alert", "bungeecord.command.alertraw", "bungeecord.command.bungee", "bungeecord.command.end", "bungeecord.command.ip", "bungeecord.command.list", "bungeecord.command.kick", "bungeecord.command.send", "bungeecord.command.find", "bungeecord.command.perms", "waterfall.command.kickall", "waterfall.command.sudo", "waterfall.command.plugins", "waterfall.command.ping"
+             } ) );
+         }
+ 
+-- 
+2.55.0
+

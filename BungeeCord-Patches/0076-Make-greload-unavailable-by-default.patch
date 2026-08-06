@@ -1,0 +1,45 @@
+From e9f7c01bf630660ccf691593762fe1335d1e947f Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Tue, 4 Aug 2026 19:28:23 -0400
+Subject: [PATCH] Make /greload unavailable by default
+
+
+diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
+index 42b87f98..796176f5 100644
+--- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
++++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
+@@ -231,7 +231,6 @@ public class BungeeCord extends ProxyServer
+         System.setOut( new PrintStream( new LoggingOutputStream( logger, Level.INFO ), true ) );
+ 
+         pluginManager = new PluginManager( this );
+-        getPluginManager().registerCommand( null, new CommandReload() );
+         getPluginManager().registerCommand( null, new CommandEnd() );
+         getPluginManager().registerCommand( null, new CommandIP() );
+         getPluginManager().registerCommand( null, new CommandBungee() );
+@@ -240,6 +239,10 @@ public class BungeeCord extends ProxyServer
+         getPluginManager().registerCommand( null, new CommandSudo() );
+         getPluginManager().registerCommand( null, new CommandCallback() );
+ 
++        if ( Boolean.parseBoolean(System.getProperty("waterfall.reloadCommand", "false")) ) {
++            getPluginManager().registerCommand( null, new CommandReload() );
++        }
++
+         if ( !Boolean.getBoolean( "net.md_5.bungee.native.disable" ) )
+         {
+             if ( !NativeCode.hasDirectBuffers() )
+diff --git a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+index 6ec5119c..f4aaa63f 100644
+--- a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
++++ b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+@@ -105,7 +105,7 @@ public class YamlConfig implements ConfigurationAdapter
+             } ) );
+             set( "permissions.admin", Arrays.asList( new String[]
+             {
+-                "bungeecord.command.alert", "bungeecord.command.alertraw", "bungeecord.command.bungee", "bungeecord.command.end", "bungeecord.command.ip", "bungeecord.command.list", "bungeecord.command.reload", "bungeecord.command.kick", "bungeecord.command.send", "bungeecord.command.find", "bungeecord.command.perms", "waterfall.command.kickall", "waterfall.command.sudo"
++                "bungeecord.command.alert", "bungeecord.command.alertraw", "bungeecord.command.bungee", "bungeecord.command.end", "bungeecord.command.ip", "bungeecord.command.list", "bungeecord.command.kick", "bungeecord.command.send", "bungeecord.command.find", "bungeecord.command.perms", "waterfall.command.kickall", "waterfall.command.sudo"
+             } ) );
+         }
+ 
+-- 
+2.55.0
+

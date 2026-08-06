@@ -1,0 +1,22 @@
+From 4b0a8707fc73ab9cbc3734f5dd345375f332dcca Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Thu, 28 May 2026 14:01:04 -0400
+Subject: [PATCH] Disable return for unknown BungeeCord version check
+
+
+diff --git a/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java b/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java
+index 12a3f5e0..fec112e1 100644
+--- a/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java
++++ b/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java
+@@ -38,7 +38,7 @@ public class ModuleManager
+         if ( bungeeVersion == null )
+         {
+             proxy.getLogger().warning( "Couldn't detect bungee version. Custom build?" );
+-            return;
++            // return;
+         }
+ 
+         List<ModuleSpec> modules = new ArrayList<>();
+-- 
+2.55.0
+
