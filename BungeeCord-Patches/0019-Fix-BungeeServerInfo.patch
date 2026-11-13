@@ -1,0 +1,22 @@
+From e341152f0756ba576d1ede01902693cc1a19665a Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Tue, 10 Nov 2026 17:05:01 -0500
+Subject: [PATCH] Fix BungeeServerInfo
+
+
+diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeServerInfo.java b/proxy/src/main/java/net/md_5/bungee/BungeeServerInfo.java
+index 7700f1d6..0d24f1eb 100644
+--- a/proxy/src/main/java/net/md_5/bungee/BungeeServerInfo.java
++++ b/proxy/src/main/java/net/md_5/bungee/BungeeServerInfo.java
+@@ -185,7 +185,7 @@ public class BungeeServerInfo implements ServerInfo
+         };
+         new Bootstrap()
+                 .channel( PipelineUtils.getChannel( socketAddress ) )
+-                .group( BungeeCord.getInstance().eventLoops )
++                .group( BungeeCord.getInstance().workerEventLoopGroup )
+                 .handler( ProxyServer.getInstance().unsafe().getServerInfoChannelInitializer().getChannelInitializer() )
+                 .option( ChannelOption.CONNECT_TIMEOUT_MILLIS, BungeeCord.getInstance().getConfig().getRemotePingTimeout() )
+                 .remoteAddress( socketAddress )
+-- 
+2.56.0
+

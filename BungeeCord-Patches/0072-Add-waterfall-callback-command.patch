@@ -1,0 +1,274 @@
+From f23d6cb10f036801c606a868b1606ddb23ae5d97 Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Tue, 10 Nov 2026 21:57:41 -0500
+Subject: [PATCH] Add /waterfall:callback command
+
+
+diff --git a/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java b/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
+index 469fe0e1..76603e04 100644
+--- a/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
++++ b/api/src/main/java/net/md_5/bungee/api/ProxyConfig.java
+@@ -219,6 +219,20 @@ public interface ProxyConfig
+      */
+     boolean isLogInitialHandlerConnections();
+ 
++    /**
++     * Whether we use the main permission node for "/waterfall:callback".
++     *
++     * @return whether we use the permission node
++     */
++    boolean isCallbackPermission();
++
++    /**
++     * Whether we use the output permission node for "/waterfall:callback".
++     *
++     * @return whether we use the permission node
++     */
++    boolean isCallbackOutput();
++
+     /**
+      * The supported versions
+      *
+diff --git a/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandCallback.java b/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandCallback.java
+new file mode 100644
+index 00000000..cc64abda
+--- /dev/null
++++ b/proxy/src/main/java/com/mickey42302/waterfallctd/command/CommandCallback.java
+@@ -0,0 +1,150 @@
++package com.mickey42302.waterfallctd.command;
++
++import com.google.common.cache.Cache;
++import com.google.common.cache.CacheBuilder;
++import java.time.Duration;
++import java.util.Collections;
++import java.util.UUID;
++import java.util.concurrent.TimeUnit;
++import java.util.concurrent.atomic.AtomicInteger;
++import java.util.function.Consumer;
++import net.md_5.bungee.BungeeCord;
++import net.md_5.bungee.api.ChatColor;
++import net.md_5.bungee.api.CommandSender;
++import net.md_5.bungee.api.chat.TextComponent;
++import net.md_5.bungee.api.connection.ProxiedPlayer;
++import net.md_5.bungee.api.plugin.Command;
++import net.md_5.bungee.api.plugin.TabExecutor;
++
++public class CommandCallback extends Command implements TabExecutor {
++
++  public static final int UNLIMITED_USES = -1;
++  private static final Duration MAX_LIFETIME = Duration.ofHours(1);
++
++  private static final Cache<UUID, CallbackEntry> REGISTERED_CALLBACKS = CacheBuilder.newBuilder()
++      .expireAfterWrite(MAX_LIFETIME.toMillis(), TimeUnit.MILLISECONDS)
++      .build();
++
++  public CommandCallback() {
++    super("waterfall:callback");
++  }
++
++  public static String registerCallback(Consumer<CommandSender> callback) {
++    return registerCallback(null, callback, 1, Duration.ofMinutes(10));
++  }
++
++  public static String registerCallback(ProxiedPlayer target, Consumer<CommandSender> callback) {
++    return registerCallback(target != null ? target.getUniqueId() : null, callback, 1, Duration.ofMinutes(10));
++  }
++
++  public static String registerCallback(UUID targetUuid, Consumer<CommandSender> callback, int uses, Duration lifetime) {
++    UUID id = UUID.randomUUID();
++    long expiresAt = System.currentTimeMillis() + Math.min(lifetime.toMillis(), MAX_LIFETIME.toMillis());
++    REGISTERED_CALLBACKS.put(id, new CallbackEntry(targetUuid, callback, uses, expiresAt));
++    return "/waterfall:callback " + id;
++  }
++
++  @Override
++  public void execute(CommandSender sender, String[] args) {
++    if (BungeeCord.getInstance().getConfig().isCallbackPermission()
++        && !sender.hasPermission("waterfall.command.callback")) {
++      sender.sendMessage(TextComponent.fromLegacyText(ChatColor.RED + "You do not have permission to execute this command."));
++      return;
++    }
++
++    if (args.length == 0) {
++      sendDebug(sender, ChatColor.RED + "Usage: /waterfall:callback <id>");
++      return;
++    }
++
++    UUID id;
++    try {
++      id = UUID.fromString(args[0]);
++    } catch (IllegalArgumentException e) {
++      sendDebug(sender, ChatColor.RED + "Invalid callback token format.");
++      return;
++    }
++
++    CallbackEntry entry = REGISTERED_CALLBACKS.getIfPresent(id);
++    if (entry == null || entry.isExpired()) {
++      REGISTERED_CALLBACKS.invalidate(id);
++      sendDebug(sender, ChatColor.RED + "This callback has expired or is invalid.");
++      return;
++    }
++
++    if (!entry.canUse(sender)) {
++      sendDebug(sender, ChatColor.RED + "You are not authorized to trigger this callback.");
++      return;
++    }
++
++    if (!entry.consumeUse()) {
++      REGISTERED_CALLBACKS.invalidate(id);
++      sendDebug(sender, ChatColor.RED + "This callback has already been used.");
++      return;
++    }
++
++    if (entry.isExhausted()) {
++      REGISTERED_CALLBACKS.invalidate(id);
++    }
++
++    entry.callback.accept(sender);
++    sendDebug(sender, ChatColor.GREEN + "A callback has been triggered using the " + ChatColor.WHITE + id + ChatColor.GREEN + " identifier.");
++  }
++
++  @Override
++  public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
++    return Collections.emptyList();
++  }
++
++  private void sendDebug(CommandSender sender, String message) {
++    if (BungeeCord.getInstance().getConfig().isCallbackOutput()
++        && sender.hasPermission("waterfall.command.callback.output")) {
++      sender.sendMessage(TextComponent.fromLegacyText(message));
++    }
++  }
++
++  private static class CallbackEntry {
++    private final UUID targetUuid;
++    private final Consumer<CommandSender> callback;
++    private final AtomicInteger remainingUses;
++    private final boolean unlimited;
++    private final long expiresAt;
++
++    CallbackEntry(UUID targetUuid, Consumer<CommandSender> callback, int uses, long expiresAt) {
++      this.targetUuid = targetUuid;
++      this.callback = callback;
++      this.unlimited = (uses == UNLIMITED_USES);
++      this.remainingUses = new AtomicInteger(Math.max(1, uses));
++      this.expiresAt = expiresAt;
++    }
++
++    boolean isExpired() {
++      return System.currentTimeMillis() > expiresAt;
++    }
++
++    boolean canUse(CommandSender sender) {
++      if (targetUuid == null) {
++        return true;
++      }
++      return sender instanceof ProxiedPlayer && ((ProxiedPlayer) sender).getUniqueId().equals(targetUuid);
++    }
++
++    boolean consumeUse() {
++      if (unlimited) {
++        return true;
++      }
++      int current;
++      do {
++        current = remainingUses.get();
++        if (current <= 0) {
++          return false;
++        }
++      } while (!remainingUses.compareAndSet(current, current - 1));
++      return true;
++    }
++
++    boolean isExhausted() {
++      return !unlimited && remainingUses.get() <= 0;
++    }
++  }
++}
+\ No newline at end of file
+diff --git a/proxy/src/main/java/io/github/waterfallmc/waterfall/conf/WaterfallConfiguration.java b/proxy/src/main/java/io/github/waterfallmc/waterfall/conf/WaterfallConfiguration.java
+index da0efa36..73e07e6b 100644
+--- a/proxy/src/main/java/io/github/waterfallmc/waterfall/conf/WaterfallConfiguration.java
++++ b/proxy/src/main/java/io/github/waterfallmc/waterfall/conf/WaterfallConfiguration.java
+@@ -62,12 +62,28 @@ public class WaterfallConfiguration extends Configuration {
+      */
+     private int pluginChannelNameLimit = 128;
+ 
++    /**
++     * Whether we use the main permission node for "/waterfall:callback".
++     * <p>
++     * Default is false
++     */
++    private boolean callbackPermission = false;
++
++    /**
++     * Whether we use the output permission node for "/waterfall:callback".
++     * <p>
++     * Default is false
++     */
++    private boolean callbackOutput = false;
++
+     @Override
+     public void load() {
+         super.load();
+         YamlConfig config = new YamlConfig(new File("waterfall.yml"));
+         config.load(false); // Load, but no permissions
+         logInitialHandlerConnections = config.getBoolean( "log_initial_handler_connections", logInitialHandlerConnections );
++        callbackPermission = config.getBoolean( "callback_permission", callbackPermission );
++        callbackOutput = config.getBoolean( "callback_output", callbackOutput );
+         gameVersion = config.getString("game_version", "").isEmpty() ? Joiner.on(", ").join(ProtocolConstants.SUPPORTED_VERSIONS) : config.getString("game_version", "");
+         useNettyDnsResolver = config.getBoolean("use_netty_dns_resolver", useNettyDnsResolver);
+         // Throttling options
+@@ -84,6 +100,16 @@ public class WaterfallConfiguration extends Configuration {
+         return logInitialHandlerConnections;
+     }
+ 
++    @Override
++    public boolean isCallbackPermission() {
++        return callbackPermission;
++    }
++
++    @Override
++    public boolean isCallbackOutput() {
++        return callbackOutput;
++    }
++
+     @Override
+     public String getGameVersion() {
+         return gameVersion;
+diff --git a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
+index 044da56a..383fce0f 100644
+--- a/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
++++ b/proxy/src/main/java/net/md_5/bungee/BungeeCord.java
+@@ -6,6 +6,7 @@ import com.google.common.collect.Iterables;
+ import com.google.common.collect.Lists;
+ import com.google.common.collect.Sets;
+ import com.google.common.util.concurrent.ThreadFactoryBuilder;
++import com.mickey42302.waterfallctd.command.CommandCallback;
+ import com.mickey42302.waterfallctd.command.CommandHelp;
+ import com.mickey42302.waterfallctd.command.CommandPing;
+ import com.mickey42302.waterfallctd.command.CommandPlugins;
+@@ -232,6 +233,7 @@ public class BungeeCord extends ProxyServer
+         getPluginManager().registerCommand( null, new CommandIP() );
+         getPluginManager().registerCommand( null, new CommandBungee() );
+         getPluginManager().registerCommand( null, new CommandPerms() );
++        getPluginManager().registerCommand( null, new CommandCallback() );
+         getPluginManager().registerCommand( null, new CommandHelp() );
+         getPluginManager().registerCommand( null, new CommandPing() );
+         getPluginManager().registerCommand( null, new CommandPlugins() );
+diff --git a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+index 99648c5f..b3a25f52 100644
+--- a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
++++ b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+@@ -101,7 +101,7 @@ public class YamlConfig implements ConfigurationAdapter
+         {
+             set( "permissions.default", Arrays.asList( new String[]
+             {
+-                "bungeecord.command.server", "waterfall.command.help"
++                "bungeecord.command.server", "waterfall.command.callback", "waterfall.command.help"
+             } ) );
+             set( "permissions.admin", Arrays.asList( new String[]
+             {
+-- 
+2.56.0
+

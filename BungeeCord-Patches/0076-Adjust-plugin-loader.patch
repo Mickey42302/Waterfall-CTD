@@ -1,0 +1,67 @@
+From 403c7f5b77168c2dbb44643fb71e2d825d8ac42a Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Thu, 12 Nov 2026 20:23:41 -0500
+Subject: [PATCH] Adjust plugin loader
+
+
+diff --git a/api/src/main/java/net/md_5/bungee/api/plugin/Plugin.java b/api/src/main/java/net/md_5/bungee/api/plugin/Plugin.java
+index 71e7b105..a7d519c2 100644
+--- a/api/src/main/java/net/md_5/bungee/api/plugin/Plugin.java
++++ b/api/src/main/java/net/md_5/bungee/api/plugin/Plugin.java
+@@ -32,9 +32,51 @@ public class Plugin
+     public Plugin()
+     {
+         ClassLoader classLoader = getClass().getClassLoader();
+-        Preconditions.checkState( classLoader instanceof PluginClassloader, "Plugin requires " + PluginClassloader.class.getName() );
+ 
+-        ( (PluginClassloader) classLoader ).init( this );
++        // Allow PluginClassloader for standard plugins, or system/application loader for bootstrap modules
++        if ( classLoader instanceof PluginClassloader )
++        {
++            ( (PluginClassloader) classLoader ).init( this );
++        } else {
++            Preconditions.checkState(
++                classLoader == ClassLoader.getSystemClassLoader() ||
++                classLoader == this.getClass().getClassLoader(),
++                "Plugin requires " + PluginClassloader.class.getName()
++            );
++
++            // Populate required fields for bootstrap/system-loaded modules
++            this.proxy = ProxyServer.getInstance();
++
++            // Derive a clean, normalized name based on the class simple name
++            String simpleName = getClass().getSimpleName().toLowerCase();
++            String pluginName;
++
++            // Check for reconnect/yaml modules first (PluginYaml contains "yaml")
++            if (simpleName.contains("reconnect") || simpleName.contains("yaml")) {
++                pluginName = "reconnect_yaml";
++            } else if (simpleName.startsWith("plugin")) {
++                pluginName = simpleName.substring(6); // Turns "pluginfind" into "find"
++            } else {
++                pluginName = simpleName;
++            }
++
++            // Normalize standard Bungee/Waterfall command prefixes
++            if (pluginName.equals("server") || pluginName.equals("find") || pluginName.equals("kick") ||
++                pluginName.equals("list") || pluginName.equals("alert") || pluginName.equals("send")) {
++                pluginName = "cmd_" + pluginName;
++            }
++
++            this.logger = Logger.getLogger(pluginName);
++
++            // Create the description and populate its clean name
++            PluginDescription desc = new PluginDescription();
++            desc.setName(pluginName);
++            desc.setMain(getClass().getName());
++            desc.setVersion("26.1-R0.1-SNAPSHOT");
++            desc.setAuthor("SpigotMC");
++
++            this.description = desc;
++        }
+     }
+ 
+     protected Plugin(ProxyServer proxy, PluginDescription description)
+-- 
+2.56.0
+

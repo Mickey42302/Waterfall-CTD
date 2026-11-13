@@ -1,0 +1,218 @@
+From af2eead12367588d665125e1d607d0928e857888 Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Thu, 12 Nov 2026 20:34:31 -0500
+Subject: [PATCH] Change display names
+
+
+diff --git a/api/pom.xml b/api/pom.xml
+index b4f62ad6..1e9c0a54 100644
+--- a/api/pom.xml
++++ b/api/pom.xml
+@@ -15,7 +15,7 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>BungeeCord-API</name>
++    <name>Waterfall-API</name>
+     <description>API implemented by the Elastic Portal Suite</description>
+ 
+     <dependencies>
+diff --git a/bootstrap/pom.xml b/bootstrap/pom.xml
+index a6575f0c..415f699d 100644
+--- a/bootstrap/pom.xml
++++ b/bootstrap/pom.xml
+@@ -15,7 +15,7 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>BungeeCord-Bootstrap</name>
++    <name>Waterfall-Bootstrap</name>
+     <description>Java loader for BungeeCord</description>
+ 
+     <properties>
+diff --git a/chat/pom.xml b/chat/pom.xml
+index fc99a909..ec83b4da 100644
+--- a/chat/pom.xml
++++ b/chat/pom.xml
+@@ -15,7 +15,7 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>BungeeCord-Chat</name>
++    <name>Waterfall-Chat</name>
+     <description>Minecraft JSON chat API intended for use with BungeeCord</description>
+ 
+     <dependencies>
+diff --git a/config/pom.xml b/config/pom.xml
+index 558844e8..971f92c1 100644
+--- a/config/pom.xml
++++ b/config/pom.xml
+@@ -15,7 +15,7 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>BungeeCord-Config</name>
++    <name>Waterfall-Config</name>
+     <description>Generic java configuration API intended for use with BungeeCord</description>
+ 
+     <dependencies>
+diff --git a/dialog/pom.xml b/dialog/pom.xml
+index c87778e4..cb8df349 100644
+--- a/dialog/pom.xml
++++ b/dialog/pom.xml
+@@ -15,7 +15,7 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>BungeeCord-Dialog</name>
++    <name>Waterfall-Dialog</name>
+     <description>Minecraft dialog API intended for use with BungeeCord</description>
+     <licenses>
+         <license>
+diff --git a/event/pom.xml b/event/pom.xml
+index be6ff48a..b3d4ffb6 100644
+--- a/event/pom.xml
++++ b/event/pom.xml
+@@ -15,6 +15,6 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>BungeeCord-Event</name>
++    <name>Waterfall-Event</name>
+     <description>Generic java event dispatching API intended for use with BungeeCord</description>
+ </project>
+diff --git a/log/pom.xml b/log/pom.xml
+index fc96cc82..3a72f083 100644
+--- a/log/pom.xml
++++ b/log/pom.xml
+@@ -15,7 +15,7 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>BungeeCord-Log</name>
++    <name>Waterfall-Log</name>
+     <description>Simplistic and performant java.util.Logger based logger and console API designed for use with BungeeCord and Minecraft related applications.</description>
+ 
+     <dependencies>
+diff --git a/maven-resolver/pom.xml b/maven-resolver/pom.xml
+index fbcafd45..c2c14d58 100644
+--- a/maven-resolver/pom.xml
++++ b/maven-resolver/pom.xml
+@@ -15,7 +15,7 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>BungeeCord-Maven-Resolver</name>
++    <name>Waterfall-Maven-Resolver</name>
+     <description>Combines maven-resolver artifacts to manage dependency versions and avoid split packages.</description>
+ 
+     <dependencies>
+diff --git a/native/pom.xml b/native/pom.xml
+index e87cef06..9d0cd454 100644
+--- a/native/pom.xml
++++ b/native/pom.xml
+@@ -15,7 +15,7 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>BungeeCord-Native</name>
++    <name>Waterfall-Native</name>
+     <description>Optional native code to speed up and enhance BungeeCord functionality.</description>
+ 
+     <dependencies>
+diff --git a/nbt/pom.xml b/nbt/pom.xml
+index 42df82d8..d98a2874 100644
+--- a/nbt/pom.xml
++++ b/nbt/pom.xml
+@@ -15,7 +15,7 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>BungeeCord-NBT</name>
++    <name>Waterfall-NBT</name>
+     <description>Minimal implementation of NBT for use in BungeeCord</description>
+     <licenses>
+         <license>
+diff --git a/protocol/pom.xml b/protocol/pom.xml
+index e26d66dc..be82343b 100644
+--- a/protocol/pom.xml
++++ b/protocol/pom.xml
+@@ -15,7 +15,7 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>BungeeCord-Protocol</name>
++    <name>Waterfall-Protocol</name>
+     <description>Minimal implementation of the Minecraft protocol for use in BungeeCord</description>
+ 
+     <dependencies>
+diff --git a/proxy/pom.xml b/proxy/pom.xml
+index 09538b62..8fd1a783 100644
+--- a/proxy/pom.xml
++++ b/proxy/pom.xml
+@@ -15,7 +15,7 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>BungeeCord-Proxy</name>
++    <name>Waterfall-Proxy</name>
+     <description>Proxy component of the Elastic Portal Suite</description>
+ 
+     <properties>
+diff --git a/query/pom.xml b/query/pom.xml
+index 9ab08979..5cfd5884 100644
+--- a/query/pom.xml
++++ b/query/pom.xml
+@@ -15,7 +15,7 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>BungeeCord-Query</name>
++    <name>Waterfall-Query</name>
+     <description>Minecraft query implementation based on the BungeeCord API.</description>
+ 
+     <dependencies>
+diff --git a/module/pom.xml b/module/pom.xml
+index 65d1a6aa..ca0c4dcd 100644
+--- a/module/pom.xml
++++ b/module/pom.xml
+@@ -15,8 +15,8 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>pom</packaging>
+ 
+-    <name>BungeeCord Modules</name>
+-    <description>Parent project for all BungeeCord modules.</description>
++    <name>Waterfall Modules</name>
++    <description>Parent project for all Waterfall modules.</description>
+ 
+     <modules>
+         <module>cmd-alert</module>
+diff --git a/serializer/pom.xml b/serializer/pom.xml
+index e24c7587..38099fe4 100644
+--- a/serializer/pom.xml
++++ b/serializer/pom.xml
+@@ -15,7 +15,7 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>BungeeCord-Serializer</name>
++    <name>Waterfall-Serializer</name>
+     <description>Minecraft JSON serializer intended for use with BungeeCord</description>
+ 
+     <dependencies>
+diff --git a/slf4j/pom.xml b/slf4j/pom.xml
+index 63fc115d..ef05b543 100644
+--- a/slf4j/pom.xml
++++ b/slf4j/pom.xml
+@@ -15,7 +15,7 @@
+     <version>26.1-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>BungeeCord-SLF4J</name>
++    <name>Waterfall-SLF4J</name>
+     <description>Wrapper over SLF4J for BungeeCord purposes.</description>
+ 
+     <properties>
+-- 
+2.56.0
+

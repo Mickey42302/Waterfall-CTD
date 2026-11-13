@@ -1,0 +1,29 @@
+From adb4bd654814be1e945583eb0e70f2ead1613ab4 Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Wed, 11 Nov 2026 19:05:27 -0500
+Subject: [PATCH] Disable custom build check
+
+
+diff --git a/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java b/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java
+index 3b5fd4fd..75eb0065 100644
+--- a/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java
++++ b/proxy/src/main/java/net/md_5/bungee/module/ModuleManager.java
+@@ -114,10 +114,11 @@ public class ModuleManager
+         }
+ 
+         ModuleVersion bungeeVersion = ModuleVersion.parse( proxy.getVersion() );
+-        if ( bungeeVersion == null )
+-        {
+-            proxy.getLogger().warning( "Couldn't detect bungee version. Custom build?" );
+-        }
++        // This is temporary (no update server is available for Waterfall-CTD).
++        // if ( bungeeVersion == null )
++        // {
++        //     proxy.getLogger().warning( "Couldn't detect bungee version. Custom build?" );
++        // }
+ 
+         for ( ModuleSpec module : modules )
+         {
+-- 
+2.56.0
+

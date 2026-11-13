@@ -1,0 +1,22 @@
+From 7391f0e839ddd0b0936f43223bda816e7aa93c5f Mon Sep 17 00:00:00 2001
+From: Mickey42302 <bgoodwin423@gmail.com>
+Date: Thu, 6 Aug 2026 18:35:52 -0400
+Subject: [PATCH] Change default MOTD
+
+
+diff --git a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+index 438d33a9..83e3914d 100644
+--- a/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
++++ b/proxy/src/main/java/net/md_5/bungee/conf/YamlConfig.java
+@@ -253,7 +253,7 @@ public class YamlConfig implements ConfigurationAdapter
+ 
+         for ( Map<String, Object> val : base )
+         {
+-            String motd = get( "motd", "&1Another Bungee server", val );
++            String motd = get( "motd", "&1Another Waterfall-CTD proxy", val );
+             motd = ChatColor.translateAlternateColorCodes( '&', motd );
+ 
+             int maxPlayers = get( "max_players", 1, val );
+-- 
+2.56.0
+
